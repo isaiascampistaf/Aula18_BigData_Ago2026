@@ -90,3 +90,38 @@ try:
 
 except Exception as e:
     print(f'Erro ao analisar a distribuição {e}')
+
+
+try:
+    iqr = q3 - q1 
+
+    limite_superior = q3 + (1.5 * iqr)
+
+    limite_inferior = q1 - (1.5 * iqr)
+    print(50*'=')
+    print(f'\n Limite Superior: {limite_superior}')
+    print(f'\n Limite Inferior: {limite_inferior}')
+
+    df_estelionato_outliers_menor = (
+        df_estelionato[df_estelionato['estelionato'] < limite_inferior]
+    )
+    print(50*'=')
+    print('\nMunicipios com outliers inferiores ')
+    if len(df_estelionato_outliers_menor) == 0:
+        print('Não há outliers inferiores')
+    else:
+        print(df_estelionato_outliers_menor)
+
+    df_estelionato_outliers_maior = (
+        df_estelionato[df_estelionato['estelionato'] > limite_superior]
+    )
+    print(50*'=')
+    print('\n Municipios com outliers superiores')
+    if len(df_estelionato_outliers_maior) == 0:
+        print('Não há outliers superiores')
+
+    else:
+        print(df_estelionato_outliers_maior)
+
+except Exception as e:
+    print(f'Erro ao verificar os outliers {e}')
